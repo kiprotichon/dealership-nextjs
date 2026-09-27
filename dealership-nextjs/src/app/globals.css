@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  color: #1a1a1a;
+  background: #f7f8fa;
+}
+
+.btn {
+  @apply inline-block bg-accent text-primary font-bold px-6 py-3 rounded-lg hover:opacity-90 transition;
+}
+.btn-outline {
+  @apply bg-transparent border-2 border-white text-white;
+}
+.input {
+  @apply w-full p-2 border border-gray-300 rounded-lg;
+}
