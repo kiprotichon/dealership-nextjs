@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#0b1f3a',
-        accent: '#c8a24a'
+        primary: '#0b0b0b',   // Daily Bazaar black
+        accent: '#f0bc00'     // Daily Bazaar gold/yellow
       }
     }
   },

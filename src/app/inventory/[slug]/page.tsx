@@ -56,7 +56,7 @@ export default async function VehicleDetailPage({ params }: { params: { slug: st
           </ul>
 
           <a
-            href={`https://wa.me/254700000000?text=I'm%20interested%20in%20the%20${vehicle.year}%20${vehicle.make}%20${vehicle.model}`}
+            href={`https://wa.me/254715455098?text=I'm%20interested%20in%20the%20${vehicle.year}%20${vehicle.make}%20${vehicle.model}`}
             target="_blank"
             rel="noreferrer"
             className="btn w-full text-center block mb-3"

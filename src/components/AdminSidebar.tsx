@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 const LINKS = [
@@ -15,7 +16,7 @@ export default function AdminSidebar({ onLogout }: { onLogout: () => void }) {
 
   return (
     <aside className="w-56 bg-primary text-white p-5 shrink-0">
-      <h3 className="text-accent font-bold mb-6">Premier Motors</h3>
+      <Image src="/logo-white.png" alt="Daily Bazaar" width={140} height={54} className="h-10 w-auto object-contain mb-6" />
       {LINKS.map(link => (
         <Link
           key={link.href}
