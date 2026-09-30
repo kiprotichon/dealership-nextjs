@@ -255,7 +255,10 @@ export default function SearchPanel({
           <button
             key={chip.label}
             type="button"
-            onClick={() => quickFilter(chip.params)}
+          onClick={() => {const cleanParams = Object.fromEntries(Object.entries(chip.params).filter(([_, v]) => v !== undefined)
+             ) as Record<string, string>;
+              quickFilter(cleanParams);
+}}
             className="rounded-full border border-gray-200 bg-white px-4 py-1.5 text-sm text-gray-600 transition hover:border-accent hover:text-primary"
           >
             {chip.label}
