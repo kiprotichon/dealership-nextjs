@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useAdminAuth } from '@/lib/useAdminAuth';
 import AdminSidebar from '@/components/AdminSidebar';
 
@@ -55,7 +56,13 @@ export default function ListingsPage() {
         <h2 className="text-2xl font-bold mb-6">Manage Listings</h2>
         <table className="w-full bg-white rounded-xl overflow-hidden">
           <thead className="bg-gray-100 text-left text-sm">
-            <tr><th className="p-3">Vehicle</th><th className="p-3">Price</th><th className="p-3">Status</th><th className="p-3">Featured</th><th className="p-3">Actions</th></tr>
+            <tr>
+              <th className="p-3">Vehicle</th>
+              <th className="p-3">Price</th>
+              <th className="p-3">Status</th>
+              <th className="p-3">Featured</th>
+              <th className="p-3">Actions</th>
+            </tr>
           </thead>
           <tbody>
             {vehicles.length ? vehicles.map(v => (
@@ -80,11 +87,18 @@ export default function ListingsPage() {
                     onChange={(e) => toggleFeatured(v.id, e.target.checked)}
                   />
                 </td>
-                <td className="p-3">
-                  <button onClick={() => deleteVehicle(v.id)} className="text-red-600">Delete</button>
+                <td className="p-3 space-x-3">
+                  <Link href={`/admin/edit-vehicle/${v.id}`} className="text-blue-600 hover:underline font-medium">
+                    Edit
+                  </Link>
+                  <button onClick={() => deleteVehicle(v.id)} className="text-red-600 hover:underline">
+                    Delete
+                  </button>
                 </td>
               </tr>
-            )) : <tr><td className="p-3" colSpan={5}>No vehicles yet.</td></tr>}
+            )) : (
+              <tr><td className="p-3" colSpan={5}>No vehicles yet.</td></tr>
+            )}
           </tbody>
         </table>
       </main>
