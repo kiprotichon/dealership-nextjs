@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import VehicleGallery from '@/components/VehicleGallery';
 import InquiryForm from '@/components/InquiryForm';
-import FinancingCalculator from '@/components/FinancingCalculator';
 import {
   Calendar, Gauge, Fuel, Settings, MapPin, Car, Shield, Building2, Truck
 } from 'lucide-react';
@@ -111,9 +110,6 @@ export default async function VehicleDetailPage({ params }: { params: { slug: st
 
             {/* Inquiry – button that opens modal form */}
             <InquiryForm vehicleId={vehicle.id} buttonLabel="Inquire about this car" />
-
-            {/* Financing calculator – pre-filled with this vehicle’s price */}
-            <FinancingCalculator defaultPrice={Number(vehicle.price)} />
           </div>
         </div>
 

@@ -8,7 +8,7 @@ const PRIORITY = [
   'Toyota', 'BMW', 'Mercedes-Benz', 'Nissan', 'Mazda', 'Subaru',
   'Honda', 'Mitsubishi', 'Isuzu', 'Audi', 'Volkswagen', 'Ford',
   'Hyundai', 'Kia', 'Suzuki', 'Land Rover', 'Lexus', 'Peugeot',
-  'Volvo', 'Jeep', 'Chevrolet', 'Porsche', 'Tesla', 'Hino'
+  'Volvo', 'Jeep', 'Chevrolet', 'Porsche',
 ];
 
 // Working logo URLs (vehiclespecs CDN). Missing ones fall back to initials.
@@ -32,7 +32,6 @@ const LOGOS: Record<string, string> = {
   Volvo: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/volvo-logo.svg',
   Jeep: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/jeep-logo.svg',
   Porsche: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/porsche-logo.svg',
-  Tesla: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/tesla-logo.svg',
   Honda: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/honda-logo.svg',
   Subaru: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/subaru-logo.svg',
   Lexus: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/lexus-logo.svg',
