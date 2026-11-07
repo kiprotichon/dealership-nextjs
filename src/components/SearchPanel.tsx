@@ -342,6 +342,13 @@ export default function SearchPanel({
             label: 'Nissan',
             params: { make: 'Nissan' }
           },
+
+          { 
+            label: 'mazda',
+            params: { make: 'Mazda' }
+
+          },
+          
           {
             label: 'Under 2M',
             params: { maxPrice: '2000000' }

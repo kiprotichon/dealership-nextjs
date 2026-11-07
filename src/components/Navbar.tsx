@@ -17,7 +17,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 border-b border-accent/20 bg-primary text-white">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center">
-          <Image src="/logo-white.png" alt="Daily Bazaar" width={160} height={60} className="h-11 w-auto object-contain" priority />
+          <Image src="/logo_transparent_yellow.png" alt="Daily Bazaar" width={160} height={60} className="h-11 w-auto object-contain" priority />
         </Link>
         <nav className="hidden items-center gap-8 md:flex">
           {links.map(l => (

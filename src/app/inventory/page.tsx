@@ -9,11 +9,17 @@ const SORT_MAP: Record<string, any> = {
   newest: { createdAt: 'desc' },
   price_low: { price: 'asc' },
   price_high: { price: 'desc' },
-  year: { year: 'desc' }
+  year: { year: 'desc' },
+};
+
+const BRAND_ALIASES: Record<string, string[]> = {
+  mercedes: ['Mercedes', 'Mercedes-Benz'],
+  volkswagen: ['Volkswagen', 'VW'],
+  mini: ['Mini', 'Mini Cooper'],
 };
 
 export default async function InventoryPage({
-  searchParams
+  searchParams,
 }: {
   searchParams: {
     q?: string;
@@ -38,41 +44,111 @@ export default async function InventoryPage({
     minPrice,
     maxPrice,
     status = 'available',
-    sort = 'newest'
+    sort = 'newest',
   } = searchParams;
 
-  const ci = (v: string) => ({ equals: v, mode: 'insensitive' as const });
+  const conditions: any[] = [];
 
-  const where: any = {};
-  if (status !== 'any') where.status = status;
-  if (make) where.make = ci(make);
-  if (model) where.model = ci(model);
-  if (year && !isNaN(Number(year))) where.year = Number(year);
+  if (status !== 'any') {
+    conditions.push({ status });
+  }
+
+  if (make) {
+    const normalizedMake = make.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const aliases = BRAND_ALIASES[normalizedMake];
+
+    if (aliases) {
+      conditions.push({
+        OR: aliases.map((brand) => ({
+          make: {
+            equals: brand,
+            mode: 'insensitive',
+          },
+        })),
+      });
+    } else {
+      conditions.push({
+        make: {
+          equals: make,
+          mode: 'insensitive',
+        },
+      });
+    }
+  }
+
+  if (model) {
+    conditions.push({
+      model: {
+        equals: model,
+        mode: 'insensitive',
+      },
+    });
+  }
+
+  if (year && !isNaN(Number(year))) {
+    conditions.push({ year: Number(year) });
+  }
+
   if (minYear || maxYear) {
-    where.year = {
-      ...(minYear && !isNaN(Number(minYear)) ? { gte: Number(minYear) } : {}),
-      ...(maxYear && !isNaN(Number(maxYear)) ? { lte: Number(maxYear) } : {})
-    };
+    conditions.push({
+      year: {
+        ...(minYear && !isNaN(Number(minYear))
+          ? { gte: Number(minYear) }
+          : {}),
+        ...(maxYear && !isNaN(Number(maxYear))
+          ? { lte: Number(maxYear) }
+          : {}),
+      },
+    });
   }
+
   if (minPrice || maxPrice) {
-    where.price = {
-      ...(minPrice && !isNaN(Number(minPrice)) ? { gte: Number(minPrice) } : {}),
-      ...(maxPrice && !isNaN(Number(maxPrice)) ? { lte: Number(maxPrice) } : {})
-    };
+    conditions.push({
+      price: {
+        ...(minPrice && !isNaN(Number(minPrice))
+          ? { gte: Number(minPrice) }
+          : {}),
+        ...(maxPrice && !isNaN(Number(maxPrice))
+          ? { lte: Number(maxPrice) }
+          : {}),
+      },
+    });
   }
+
   if (q) {
-    where.OR = ['make', 'model', 'description'].map(f => ({
-      [f]: { contains: q, mode: 'insensitive' }
-    }));
+    conditions.push({
+      OR: ['make', 'model', 'description'].map((field) => ({
+        [field]: {
+          contains: q,
+          mode: 'insensitive',
+        },
+      })),
+    });
   }
+
+  const where = conditions.length ? { AND: conditions } : {};
 
   const vehicles = await prisma.vehicle.findMany({
     where,
     orderBy: SORT_MAP[sort] || SORT_MAP.newest,
-    include: { images: { where: { isPrimary: true }, take: 1 } }
+    include: {
+      images: {
+        where: { isPrimary: true },
+        take: 1,
+      },
+    },
   });
 
-  const filtered = Boolean(q || make || model || year || minYear || maxYear || minPrice || maxPrice);
+  const filtered = Boolean(
+    q ||
+    make ||
+    model ||
+    year ||
+    minYear ||
+    maxYear ||
+    minPrice ||
+    maxPrice
+  );
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -81,10 +157,13 @@ export default async function InventoryPage({
           <h1 className="text-2xl font-bold text-primary sm:text-3xl">
             {make ? `${make} ${model || ''}`.trim() : 'Our inventory'}
           </h1>
+
           <p className="mt-1 text-sm text-gray-500">
-            {vehicles.length} {vehicles.length === 1 ? 'vehicle' : 'vehicles'} found
+            {vehicles.length}{' '}
+            {vehicles.length === 1 ? 'vehicle' : 'vehicles'} found
           </p>
         </div>
+
         {filtered && (
           <Link
             href="/inventory"
@@ -99,9 +178,13 @@ export default async function InventoryPage({
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {vehicles.length ? (
-          vehicles.map(v => <VehicleCard key={v.slug} v={v as any} />)
+          vehicles.map((vehicle) => (
+            <VehicleCard key={vehicle.slug} v={vehicle as any} />
+          ))
         ) : (
-          <p className="text-gray-500">No vehicles match your search.</p>
+          <p className="text-gray-500">
+            No vehicles match your search.
+          </p>
         )}
       </div>
     </main>

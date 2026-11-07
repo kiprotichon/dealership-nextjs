@@ -1,94 +1,168 @@
 'use client';
 
-import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
+import { useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-// Priority order – brands with stock appear first via sorting in parent, but this list defines display order preference
-const PRIORITY = [
-  'Toyota', 'BMW', 'Mercedes-Benz', 'Nissan', 'Mazda', 'Subaru',
-  'Honda', 'Mitsubishi', 'Isuzu', 'Audi', 'Volkswagen', 'Ford',
-  'Hyundai', 'Kia', 'Suzuki', 'Land Rover', 'Lexus', 'Peugeot',
-  'Volvo', 'Jeep', 'Chevrolet', 'Porsche',
+const LOGO_BASE =
+  'https://www.carmaxea.com/wp-content/uploads/2023/03/';
+
+const BRANDS = [
+  { name: 'Audi', make: 'Audi', logo: 'Audi-160x89.jpg' },
+  { name: 'BMW', make: 'BMW', logo: 'BMW-160x89.jpg' },
+  { name: 'Ford', make: 'Ford', logo: 'Ford-1-160x89.jpg' },
+  { name: 'Honda', make: 'Honda', logo: 'Honda-160x89.jpg' },
+  { name: 'Isuzu', make: 'Isuzu', logo: 'Isuzu-160x89.jpg' },
+  { name: 'Jeep', make: 'Jeep', logo: 'Jeep-160x89.jpg' },
+  { name: 'Land Rover', make: 'Land Rover', logo: 'Land-Rover-160x89.jpg' },
+  { name: 'Lexus', make: 'Lexus', logo: 'Lexus-160x89.jpg' },
+  { name: 'Mazda', make: 'Mazda', logo: 'Mazda-160x89.jpg' },
+  { name: 'Mercedes-Benz', make: 'Mercedes', logo: 'Mercedes-160x89.jpg' },
+  { name: 'Mini Cooper', make: 'Mini', logo: 'Mini-Cooper-160x89.jpg' },
+  { name: 'Mitsubishi', make: 'Mitsubishi', logo: 'Mitsubishi-160x89.jpg' },
+  { name: 'Nissan', make: 'Nissan', logo: 'Nissan-160x89.jpg' },
+  { name: 'Peugeot', make: 'Peugeot', logo: 'Peugeot-160x89.jpg' },
+  { name: 'Porsche', make: 'Porsche', logo: 'Porsche-160x89.jpg' },
+  { name: 'Subaru', make: 'Subaru', logo: 'Subaru-160x89.jpg' },
+  { name: 'Suzuki', make: 'Suzuki', logo: 'Suzuki-160x89.jpg' },
+  { name: 'Toyota', make: 'Toyota', logo: 'Toyota-160x89.jpg' },
+  { name: 'Volvo', make: 'Volvo', logo: 'Volvo-160x89.jpg' },
+  { name: 'Volkswagen', make: 'Volkswagen', logo: 'VW-160x89.jpg' },
 ];
 
-// Working logo URLs (vehiclespecs CDN). Missing ones fall back to initials.
-const LOGOS: Record<string, string> = {
-  Toyota: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/toyota-logo.svg',
-  BMW: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/bmw-logo.svg',
-  'Mercedes-Benz': 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/mercedes-benz-logo.svg',
-  Mercedes: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/mercedes-benz-logo.svg',
-  Nissan: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/nissan-logo.svg',
-  Mazda: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/mazda-logo.svg',
-  Mitsubishi: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/mitsubishi-logo.svg',
-  Isuzu: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/isuzu-logo.svg',
-  Audi: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/audi-logo.svg',
-  Volkswagen: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/volkswagen-logo.svg',
-  Ford: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/ford-logo.svg',
-  Hyundai: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/hyundai-logo.svg',
-  Kia: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/kia-logo.svg',
-  Suzuki: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/suzuki-logo.svg',
-  'Land Rover': 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/land-rover-logo.svg',
-  Peugeot: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/peugeot-logo.svg',
-  Volvo: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/volvo-logo.svg',
-  Jeep: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/jeep-logo.svg',
-  Porsche: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/porsche-logo.svg',
-  Honda: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/honda-logo.svg',
-  Subaru: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/subaru-logo.svg',
-  Lexus: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/lexus-logo.svg',
-  Chevrolet: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/chevrolet-logo.svg',
-  Hino: 'https://cdn.jsdelivr.net/gh/vehiclespecs/brand-logos@main/hino-logo.svg',
-};
+function normalizeBrand(value: string) {
+  const brand = value.toLowerCase().replace(/[^a-z0-9]/g, '');
 
-function BrandCard({ make, count }: { make: string; count: number }) {
-  const [imgFailed, setImgFailed] = useState(false);
-  const logo = LOGOS[make];
+  if (brand === 'mercedes' || brand === 'mercedesbenz') {
+    return 'mercedes';
+  }
 
-  return (
-    <Link
-      href={`/inventory?make=${encodeURIComponent(make)}`}
-      className="group flex w-36 shrink-0 flex-col items-center rounded-2xl border border-gray-200 bg-white p-4 transition hover:border-accent hover:shadow-md"
-    >
-      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-50 overflow-hidden">
-        {logo && !imgFailed ? (
-          <img
-            src={logo}
-            alt={`${make} logo`}
-            className="h-10 w-10 object-contain"
-            onError={() => setImgFailed(true)}
-          />
-        ) : (
-          <span className="text-sm font-extrabold text-primary">{make.slice(0, 2).toUpperCase()}</span>
-        )}
-      </div>
-      <p className="mt-3 text-sm font-semibold text-primary text-center truncate w-full">{make}</p>
-      <p className="text-xs text-gray-500">
-        {count > 0 ? `${count} ${count === 1 ? 'car' : 'cars'} available` : 'View inventory'}
-      </p>
-    </Link>
-  );
+  if (brand === 'vw' || brand === 'volkswagen') {
+    return 'volkswagen';
+  }
+
+  if (brand === 'mini' || brand === 'minicooper') {
+    return 'mini';
+  }
+
+  if (brand === 'landrover') {
+    return 'landrover';
+  }
+
+  return brand;
 }
 
-export default function BrandScroller({ counts }: { counts: Record<string, number> }) {
-  // Stock first, then priority order
-  const withStock = Object.keys(counts).filter(m => counts[m] > 0);
-  const rest = PRIORITY.filter(m => !withStock.includes(m));
-  // Also include any stock brands not in PRIORITY
-  const extra = withStock.filter(m => !PRIORITY.includes(m));
-  const ordered = [
-    ...withStock.sort((a, b) => counts[b] - counts[a]),
-    ...PRIORITY.filter(m => !withStock.includes(m)),
-    ...extra
-  ];
-  // Deduplicate
-  const makes = Array.from(new Set(ordered));
+export default function BrandScroller({
+  counts,
+}: {
+  counts: Record<string, number>;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [failedLogos, setFailedLogos] = useState<string[]>([]);
+
+  const brands = BRANDS
+    .map((brand) => {
+      const count = Object.entries(counts).reduce(
+        (total, [databaseMake, vehicleCount]) => {
+          return normalizeBrand(databaseMake) === normalizeBrand(brand.make)
+            ? total + vehicleCount
+            : total;
+        },
+        0
+      );
+
+      return { ...brand, count };
+    })
+    .filter((brand) => brand.count > 0)
+    .filter((brand) => !failedLogos.includes(brand.logo))
+    .sort((a, b) => b.count - a.count);
+
+  const scroll = (direction: 'left' | 'right') => {
+    scrollRef.current?.scrollBy({
+      left: direction === 'left' ? -300 : 300,
+      behavior: 'smooth',
+    });
+  };
+
+  if (brands.length === 0) return null;
 
   return (
-    <div className="mt-6 -mx-4 px-4">
-      <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-        {makes.map(make => (
-          <BrandCard key={make} make={make} count={counts[make] || 0} />
+    <section>
+      <div className="mb-8 flex items-end justify-between gap-4">
+        <div>
+          <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#b58b00]">
+            Explore our collection
+          </p>
+
+          <h2 className="mt-2 text-3xl font-black text-[#0b0b0b] sm:text-4xl">
+            Shop By Brand
+          </h2>
+
+          <p className="mt-3 text-sm text-gray-500">
+            Browse available vehicles from your favourite manufacturers.
+          </p>
+        </div>
+
+        <div className="hidden gap-2 sm:flex">
+          <button
+            type="button"
+            onClick={() => scroll('left')}
+            aria-label="Scroll brands left"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 transition hover:border-[#f0bc00] hover:bg-[#f0bc00]"
+          >
+            <ChevronLeft size={20} />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => scroll('right')}
+            aria-label="Scroll brands right"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 transition hover:border-[#f0bc00] hover:bg-[#f0bc00]"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+      </div>
+
+      <div
+        ref={scrollRef}
+        className="flex gap-4 overflow-x-auto scroll-smooth pb-4"
+      >
+        {brands.map((brand) => (
+          <Link
+            key={brand.name}
+            href={`/inventory?make=${encodeURIComponent(brand.make)}`}
+            className="group flex min-w-[150px] flex-col items-center rounded-xl border border-gray-200 bg-white p-5 transition hover:-translate-y-1 hover:border-[#f0bc00] hover:shadow-lg sm:min-w-[170px]"
+          >
+            <div className="relative flex h-20 w-full items-center justify-center">
+              <Image
+                src={`${LOGO_BASE}${brand.logo}`}
+                alt={`${brand.name} logo`}
+                width={130}
+                height={73}
+                unoptimized
+                className="max-h-[65px] w-auto max-w-full object-contain"
+                onError={() =>
+                  setFailedLogos((current) =>
+                    current.includes(brand.logo)
+                      ? current
+                      : [...current, brand.logo]
+                  )
+                }
+              />
+            </div>
+
+            <h3 className="mt-3 text-center text-sm font-bold text-[#0b0b0b] transition group-hover:text-[#a77e00]">
+              {brand.name}
+            </h3>
+
+            <p className="mt-1 text-xs text-gray-500">
+              {brand.count} {brand.count === 1 ? 'vehicle' : 'vehicles'}
+            </p>
+          </Link>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
