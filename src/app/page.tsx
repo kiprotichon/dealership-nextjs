@@ -19,7 +19,7 @@ import {
 import { prisma } from '@/lib/prisma';
 import VehicleCard from '@/components/VehicleCard';
 import SearchPanel from '@/components/SearchPanel';
-import BrandScroller from '@/components/BrandScroller';
+import BrandScroller from '@/components/brandscroller';
 
 export const dynamic = 'force-dynamic';
 
