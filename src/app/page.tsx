@@ -201,7 +201,7 @@ export default async function HomePage() {
       ===================================================== */}
       <section className="relative flex min-h-[620px] items-center overflow-hidden bg-[#0b0b0b] md:min-h-[700px]">
 
-        {heroImage && (
+    
           <Image
             src="/public/hero.jpeg"  
             alt="Vehicle available at Daily Bazaar"
@@ -211,7 +211,7 @@ export default async function HomePage() {
             sizes="100vw"
             className="object-cover object-center"
           />
-        )}
+  
 
         <div className="absolute inset-0 bg-black/65" />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/30" />
