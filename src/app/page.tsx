@@ -203,7 +203,7 @@ export default async function HomePage() {
 
         {heroImage && (
           <Image
-            src={heroImage}
+            src="/public/hero.jpeg"  
             alt="Vehicle available at Daily Bazaar"
             fill
             priority
@@ -226,7 +226,7 @@ export default async function HomePage() {
             </div>
 
             <h1 className="text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
-              Find the right car.
+              Smart Deals Every Day.
               <span className="block text-[#f0bc00]">
                 Drive with confidence.
               </span>

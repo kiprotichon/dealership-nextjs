@@ -1,4 +1,7 @@
 
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -7,6 +10,7 @@ import {
   Settings2,
   ArrowUpRight,
   CalendarDays,
+  CarFront,
 } from 'lucide-react';
 
 export interface VehicleCardData {
@@ -24,7 +28,8 @@ export interface VehicleCardData {
 }
 
 export default function VehicleCard({ v }: { v: VehicleCardData }) {
-  const img = v.images?.[0]?.imageUrl || '/placeholder-car.jpg';
+  const imageUrl = v.images?.[0]?.imageUrl?.trim() || '';
+  const [imageFailed, setImageFailed] = useState(false);
 
   const formattedPrice = Number(v.price).toLocaleString('en-KE');
 
@@ -39,9 +44,10 @@ export default function VehicleCard({ v }: { v: VehicleCardData }) {
     {
       icon: Gauge,
       label: 'Mileage',
-      value: v.mileage != null
-        ? `${v.mileage.toLocaleString('en-KE')} km`
-        : 'Not specified',
+      value:
+        v.mileage != null
+          ? `${v.mileage.toLocaleString('en-KE')} km`
+          : 'Not specified',
     },
     {
       icon: Fuel,
@@ -63,26 +69,36 @@ export default function VehicleCard({ v }: { v: VehicleCardData }) {
       {/* VEHICLE IMAGE */}
       <div className="relative aspect-[16/10] overflow-hidden bg-[#eeeeee]">
 
-        <Image
-          src={img}
-          alt={`${v.year} ${v.make} ${v.model}`}
-          fill
-          unoptimized
-          sizes="(max-width: 640px) 290px, 340px"
-          className="object-cover transition-transform duration-700 group-hover:scale-110"
-        />
+        {imageUrl && !imageFailed ? (
+          <Image
+            src={imageUrl}
+            alt={`${v.year} ${v.make} ${v.model}`}
+            fill
+            unoptimized
+            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 340px"
+            onError={() => setImageFailed(true)}
+            className="object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+        ) : (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-[#eeeeee] to-[#cfcfcf] text-gray-500">
+            <CarFront size={54} strokeWidth={1.2} />
+            <span className="mt-2 text-xs font-semibold uppercase tracking-wider">
+              Image coming soon
+            </span>
+          </div>
+        )}
 
-        {/* Image overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 opacity-70" />
+        {/* IMAGE OVERLAY */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 opacity-70" />
 
-        {/* Featured badge */}
+        {/* FEATURED BADGE */}
         {v.featured && (
           <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-[#f0bc00] px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-[#0b0b0b] shadow-md">
             Featured
           </span>
         )}
 
-        {/* Availability badge */}
+        {/* AVAILABILITY BADGE */}
         <span
           className={`absolute right-3 top-3 rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider shadow-md ${
             isAvailable
@@ -93,22 +109,18 @@ export default function VehicleCard({ v }: { v: VehicleCardData }) {
           {v.status || 'Available'}
         </span>
 
-        {/* Image bottom title */}
-        <div className="absolute bottom-3 left-4 right-4">
+        {/* IMAGE BOTTOM TITLE */}
+        <div className="pointer-events-none absolute bottom-3 left-4 right-4">
           <p className="text-xs font-semibold uppercase tracking-wider text-white/80">
             {v.year} · {v.make}
           </p>
         </div>
-
       </div>
 
       {/* VEHICLE INFORMATION */}
       <div className="flex flex-1 flex-col p-5">
-
         <div className="flex-1">
-
           <div className="flex items-start justify-between gap-3">
-
             <div>
               <h3 className="text-lg font-extrabold leading-snug text-[#0b0b0b] transition group-hover:text-[#9b7900]">
                 {v.make} {v.model}
@@ -122,12 +134,10 @@ export default function VehicleCard({ v }: { v: VehicleCardData }) {
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f0bc00]/15 text-[#0b0b0b] transition group-hover:bg-[#f0bc00]">
               <ArrowUpRight size={18} />
             </div>
-
           </div>
 
           {/* PRICE */}
           <div className="mt-5 border-y border-gray-100 py-4">
-
             <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400">
               Asking Price
             </p>
@@ -138,12 +148,10 @@ export default function VehicleCard({ v }: { v: VehicleCardData }) {
               </span>
               {formattedPrice}
             </p>
-
           </div>
 
           {/* VEHICLE SPECIFICATIONS */}
           <div className="mt-4 grid grid-cols-2 gap-x-3 gap-y-4">
-
             {specifications.map((spec) => {
               const Icon = spec.icon;
 
@@ -168,14 +176,11 @@ export default function VehicleCard({ v }: { v: VehicleCardData }) {
                 </div>
               );
             })}
-
           </div>
-
         </div>
 
         {/* DETAILS BUTTON */}
         <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4">
-
           <span className="text-xs font-bold text-[#0b0b0b]">
             View Vehicle Details
           </span>
@@ -183,10 +188,9 @@ export default function VehicleCard({ v }: { v: VehicleCardData }) {
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0b0b0b] text-white transition group-hover:bg-[#f0bc00] group-hover:text-[#0b0b0b]">
             <ArrowUpRight size={16} />
           </span>
-
         </div>
-
       </div>
     </Link>
   );
 }
+
