@@ -2,7 +2,6 @@
 
 import { useState, useRef } from 'react';
 import { useAdminAuth } from '@/lib/useAdminAuth';
-import AdminSidebar from '@/components/AdminSidebar';
 import { X, Upload, Image as ImageIcon } from 'lucide-react';
 
 const MAKE_MODELS: Record<string, string[]> = {
@@ -37,7 +36,7 @@ const FUEL_TYPES = ['Petrol', 'Diesel', 'Hybrid', 'Electric', 'Petrol/Hybrid'];
 const CONDITIONS = ['Foreign Used', 'Locally Used', 'Brand New'];
 
 export default function AddVehiclePage() {
-  const { ready, authFetch, logout } = useAdminAuth();
+ const { ready, authFetch } = useAdminAuth();
   const [status, setStatus] = useState<{ ok: boolean; msg: string } | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -133,8 +132,7 @@ export default function AddVehiclePage() {
   if (!ready) return null;
 
   return (
-    <div className="flex min-h-screen">
-      <AdminSidebar onLogout={logout} />
+   <div className="w-full min-w-0">
       <main className="flex-1 p-8">
         <h2 className="text-2xl font-bold mb-6">Add New Vehicle</h2>
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl grid grid-cols-1 md:grid-cols-2 gap-4">

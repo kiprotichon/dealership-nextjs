@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -5,50 +6,36 @@ import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const LOGO_BASE =
-  'https://www.carmaxea.com/wp-content/uploads/2023/03/';
-
 const BRANDS = [
-  { name: 'Audi', make: 'Audi', logo: 'Audi-160x89.jpg' },
-  { name: 'BMW', make: 'BMW', logo: 'BMW-160x89.jpg' },
-  { name: 'Ford', make: 'Ford', logo: 'Ford-1-160x89.jpg' },
-  { name: 'Honda', make: 'Honda', logo: 'Honda-160x89.jpg' },
-  { name: 'Isuzu', make: 'Isuzu', logo: 'Isuzu-160x89.jpg' },
-  { name: 'Jeep', make: 'Jeep', logo: 'Jeep-160x89.jpg' },
-  { name: 'Land Rover', make: 'Land Rover', logo: 'Land-Rover-160x89.jpg' },
-  { name: 'Lexus', make: 'Lexus', logo: 'Lexus-160x89.jpg' },
-  { name: 'Mazda', make: 'Mazda', logo: 'Mazda-160x89.jpg' },
-  { name: 'Mercedes-Benz', make: 'Mercedes', logo: 'Mercedes-160x89.jpg' },
-  { name: 'Mini Cooper', make: 'Mini', logo: 'Mini-Cooper-160x89.jpg' },
-  { name: 'Mitsubishi', make: 'Mitsubishi', logo: 'Mitsubishi-160x89.jpg' },
-  { name: 'Nissan', make: 'Nissan', logo: 'Nissan-160x89.jpg' },
-  { name: 'Peugeot', make: 'Peugeot', logo: 'Peugeot-160x89.jpg' },
-  { name: 'Porsche', make: 'Porsche', logo: 'Porsche-160x89.jpg' },
-  { name: 'Subaru', make: 'Subaru', logo: 'Subaru-160x89.jpg' },
-  { name: 'Suzuki', make: 'Suzuki', logo: 'Suzuki-160x89.jpg' },
-  { name: 'Toyota', make: 'Toyota', logo: 'Toyota-160x89.jpg' },
-  { name: 'Volvo', make: 'Volvo', logo: 'Volvo-160x89.jpg' },
-  { name: 'Volkswagen', make: 'Volkswagen', logo: 'VW-160x89.jpg' },
+  { name: 'Audi', make: 'Audi', logo: 'Audi.jpg' },
+  { name: 'BMW', make: 'BMW', logo: 'BMW.jpg' },
+  { name: 'Ford', make: 'Ford', logo: 'Ford.jpg' },
+  { name: 'Honda', make: 'Honda', logo: 'Honda.jpg' },
+  { name: 'Isuzu', make: 'Isuzu', logo: 'Isuzu.jpg' },
+  { name: 'Jeep', make: 'Jeep', logo: 'Jeep.jpg' },
+  { name: 'Land Rover', make: 'Land Rover', logo: 'Land-Rover.jpg' },
+  { name: 'Lexus', make: 'Lexus', logo: 'Lexus.jpg' },
+  { name: 'Mazda', make: 'Mazda', logo: 'Mazda.jpg' },
+  { name: 'Mercedes-Benz', make: 'Mercedes', logo: 'Mercedes.jpg' },
+  { name: 'Mini Cooper', make: 'Mini', logo: 'Mini-Cooper.jpg' },
+  { name: 'Mitsubishi', make: 'Mitsubishi', logo: 'Mitsubishi.jpg' },
+  { name: 'Nissan', make: 'Nissan', logo: 'Nissan.jpg' },
+  { name: 'Peugeot', make: 'Peugeot', logo: 'Peugeot.jpg' },
+  { name: 'Porsche', make: 'Porsche', logo: 'Porsche.jpg' },
+  { name: 'Subaru', make: 'Subaru', logo: 'Subaru.jpg' },
+  { name: 'Suzuki', make: 'Suzuki', logo: 'Suzuki.jpg' },
+  { name: 'Toyota', make: 'Toyota', logo: 'Toyota.jpg' },
+  { name: 'Volvo', make: 'Volvo', logo: 'Volvo.jpg' },
+  { name: 'Volkswagen', make: 'Volkswagen', logo: 'VW.jpg' },
 ];
 
 function normalizeBrand(value: string) {
   const brand = value.toLowerCase().replace(/[^a-z0-9]/g, '');
 
-  if (brand === 'mercedes' || brand === 'mercedesbenz') {
-    return 'mercedes';
-  }
-
-  if (brand === 'vw' || brand === 'volkswagen') {
-    return 'volkswagen';
-  }
-
-  if (brand === 'mini' || brand === 'minicooper') {
-    return 'mini';
-  }
-
-  if (brand === 'landrover') {
-    return 'landrover';
-  }
+  if (brand === 'mercedes' || brand === 'mercedesbenz') return 'mercedes';
+  if (brand === 'vw' || brand === 'volkswagen') return 'volkswagen';
+  if (brand === 'mini' || brand === 'minicooper') return 'mini';
+  if (brand === 'landrover') return 'landrover';
 
   return brand;
 }
@@ -64,17 +51,15 @@ export default function BrandScroller({
   const brands = BRANDS
     .map((brand) => {
       const count = Object.entries(counts).reduce(
-        (total, [databaseMake, vehicleCount]) => {
-          return normalizeBrand(databaseMake) === normalizeBrand(brand.make)
+        (total, [databaseMake, vehicleCount]) =>
+          normalizeBrand(databaseMake) === normalizeBrand(brand.make)
             ? total + vehicleCount
-            : total;
-        },
+            : total,
         0
       );
 
       return { ...brand, count };
     })
-    .filter((brand) => brand.count > 0)
     .filter((brand) => !failedLogos.includes(brand.logo))
     .sort((a, b) => b.count - a.count);
 
@@ -84,8 +69,6 @@ export default function BrandScroller({
       behavior: 'smooth',
     });
   };
-
-  if (brands.length === 0) return null;
 
   return (
     <section>
@@ -137,7 +120,7 @@ export default function BrandScroller({
           >
             <div className="relative flex h-20 w-full items-center justify-center">
               <Image
-                src={`${LOGO_BASE}${brand.logo}`}
+                src={`/brands/${brand.logo}`}
                 alt={`${brand.name} logo`}
                 width={130}
                 height={73}

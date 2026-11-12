@@ -203,7 +203,7 @@ export default async function HomePage() {
 
     
           <Image
-            src="/public/hero.jpeg"  
+            src="/hero.jpeg"  
             alt="Vehicle available at Daily Bazaar"
             fill
             priority
@@ -212,10 +212,9 @@ export default async function HomePage() {
             className="object-cover object-center"
           />
   
-
-        <div className="absolute inset-0 bg-black/65" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+         <div className="absolute inset-0 bg-black/40" />
+         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/30 to-black/10" />
+         <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-black/10" /> 
 
         <div className="relative z-10 mx-auto w-full max-w-7xl px-5 py-24 sm:px-8 lg:px-12">
           <div className="max-w-3xl">
@@ -228,7 +227,7 @@ export default async function HomePage() {
             <h1 className="text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
               Smart Deals Every Day.
               <span className="block text-[#f0bc00]">
-                Drive with confidence.
+               BUY. SELL. DRIVE.
               </span>
             </h1>
 
