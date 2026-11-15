@@ -201,16 +201,15 @@ export default async function HomePage() {
       ===================================================== */}
       <section className="relative flex min-h-[620px] items-center overflow-hidden bg-[#0b0b0b] md:min-h-[700px]">
 
-    
-          <Image
-            src="/hero.jpeg"  
-            alt="Vehicle available at Daily Bazaar"
-            fill
-            priority
-            unoptimized
-            sizes="100vw"
-            className="object-cover object-center"
-          />
+     <Image
+          src="/hero.jpeg"
+          alt="Vehicle available at Daily Bazaar"
+          fill
+          priority
+          unoptimized
+          sizes="100vw"
+         className="object-cover object-center"
+    />
   
          <div className="absolute inset-0 bg-black/40" />
          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/30 to-black/10" />
@@ -486,6 +485,88 @@ export default async function HomePage() {
 
       </section>
 
+{/* =====================================================
+    DAILY BAZAAR SHOWROOM GALLERY
+===================================================== */}
+<section className="bg-gray-50 py-20">
+  <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+
+    <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+      <div>
+        <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#b58b00]">
+          A closer look
+        </p>
+
+        <h2 className="mt-3 text-3xl font-black sm:text-4xl">
+          Welcome to Daily Bazaar
+        </h2>
+
+        <p className="mt-4 max-w-xl leading-7 text-gray-500">
+          Get to know our dealership, explore our vehicle collection
+          and plan your visit to our Nairobi showroom.
+        </p>
+      </div>
+
+      <Link
+        href="/contact"
+        className="inline-flex items-center gap-2 font-bold hover:text-[#b58b00]"
+      >
+        Visit our showroom
+        <ArrowRight size={18} />
+      </Link>
+    </div>
+
+    <div className="grid gap-5 md:grid-cols-3">
+
+      {/* Placeholder 1: Showroom */}
+      <div className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+        <div className="flex h-64 flex-col items-center justify-center bg-gradient-to-br from-[#171717] to-[#393021] text-center text-white transition duration-300 group-hover:brightness-110">
+          <Building2 size={42} className="text-[#f0bc00]" />
+          <p className="mt-4 font-bold">Showroom photo</p>
+         
+        </div>
+        <div className="p-5">
+          <h3 className="font-bold">Our Showroom</h3>
+          <p className="mt-2 text-sm text-gray-500">
+            Visit Daily Bazaar in Nairobi and meet our team.
+          </p>
+        </div>
+      </div>
+
+      {/* Placeholder 2: Vehicles */}
+      <div className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+        <div className="flex h-64 flex-col items-center justify-center bg-gradient-to-br from-[#282828] to-[#51400c] text-center text-white transition duration-300 group-hover:brightness-110">
+          <CarFront size={42} className="text-[#f0bc00]" />
+          <p className="mt-4 font-bold">Vehicle collection photo</p>
+       
+        </div>
+        <div className="p-5">
+          <h3 className="font-bold">Explore Our Collection</h3>
+          <p className="mt-2 text-sm text-gray-500">
+            Discover vehicles available in our inventory.
+          </p>
+        </div>
+      </div>
+
+      {/* Placeholder 3: Customer experience */}
+      <div className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+        <div className="flex h-64 flex-col items-center justify-center bg-gradient-to-br from-[#171717] to-[#403c32] text-center text-white transition duration-300 group-hover:brightness-110">
+          <MapPin size={42} className="text-[#f0bc00]" />
+          <p className="mt-4 font-bold">Customer experience photo</p>
+        
+        </div>
+        <div className="p-5">
+          <h3 className="font-bold">Your Visit Matters</h3>
+          <p className="mt-2 text-sm text-gray-500">
+            We are ready to help you take the next step.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
       {/* =====================================================
           HOW TO BUY
       ===================================================== */}
@@ -588,40 +669,52 @@ export default async function HomePage() {
 
       </section>
 
-      {/* =====================================================
-          CUSTOMER FEEDBACK
-      ===================================================== */}
-      <section className="bg-gray-50 py-20">
-        <div className="mx-auto max-w-4xl px-5 text-center sm:px-8">
+      
 
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#f0bc00]/20 text-[#a77e00]">
-            <MessageCircle size={27} />
-          </div>
+{/* =====================================================
+    CUSTOMER REVIEWS
+===================================================== */}
+<section className="bg-gray-50 py-20">
+  <div className="mx-auto max-w-5xl px-5 sm:px-8">
 
-          <p className="mt-6 text-sm font-bold uppercase tracking-[0.2em] text-[#b58b00]">
-            Your experience matters
-          </p>
+    <div className="mx-auto max-w-2xl text-center">
 
-          <h2 className="mt-3 text-3xl font-black sm:text-4xl">
-            We would love to hear from you
-          </h2>
+      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#f0bc00]/15 text-[#a77e00]">
+        <MessageCircle size={27} />
+      </div>
 
-          <p className="mx-auto mt-5 max-w-2xl leading-8 text-gray-500">
-            Whether you have purchased a vehicle, made an enquiry or
-            simply explored our inventory, your feedback helps us improve
-            the Daily Bazaar experience.
-          </p>
+      <p className="mt-6 text-sm font-bold uppercase tracking-[0.2em] text-[#b58b00]">
+        Customer experiences
+      </p>
 
-          <Link
-            href="/contact"
-            className="mt-8 inline-flex items-center gap-3 rounded-md bg-black px-7 py-4 font-bold text-white transition hover:bg-[#f0bc00] hover:text-black"
-          >
-            Share your feedback
-            <ArrowRight size={18} />
-          </Link>
+      <h2 className="mt-3 text-3xl font-black sm:text-4xl">
+        Your Experience Matters
+      </h2>
 
-        </div>
-      </section>
+      <p className="mt-5 leading-8 text-gray-500">
+        At Daily Bazaar, every enquiry and customer interaction matters.
+        We look forward to sharing feedback from our customers and
+        their experiences with us.
+      </p>
+
+      <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+
+        <Link
+          href="/contact"
+          className="inline-flex w-full items-center justify-center gap-3 rounded-md bg-[#f0bc00] px-7 py-4 font-bold text-black transition hover:bg-[#d9a900] sm:w-auto"
+        >
+          Get in touch
+          <ArrowRight size={18} />
+        </Link>
+
+       
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
 
       {/* =====================================================
           FREQUENTLY ASKED QUESTIONS
