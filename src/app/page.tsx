@@ -202,7 +202,7 @@ export default async function HomePage() {
       <section className="relative flex min-h-[620px] items-center overflow-hidden bg-[#0b0b0b] md:min-h-[700px]">
 
      <Image
-          src="/hero.jpeg"
+          src="/logos/hero.jpeg"
           alt="Vehicle available at Daily Bazaar"
           fill
           priority
