@@ -521,8 +521,7 @@ export default async function HomePage() {
       {/* Placeholder 1: Showroom */}
       <div className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
         <div className="flex h-64 flex-col items-center justify-center bg-gradient-to-br from-[#171717] to-[#393021] text-center text-white transition duration-300 group-hover:brightness-110">
-          <Building2 size={42} className="text-[#f0bc00]" />
-          <p className="mt-4 font-bold">Showroom photo</p>
+          
          
         </div>
         <div className="p-5">
@@ -536,8 +535,7 @@ export default async function HomePage() {
       {/* Placeholder 2: Vehicles */}
       <div className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
         <div className="flex h-64 flex-col items-center justify-center bg-gradient-to-br from-[#282828] to-[#51400c] text-center text-white transition duration-300 group-hover:brightness-110">
-          <CarFront size={42} className="text-[#f0bc00]" />
-          <p className="mt-4 font-bold">Vehicle collection photo</p>
+         
        
         </div>
         <div className="p-5">
@@ -551,8 +549,7 @@ export default async function HomePage() {
       {/* Placeholder 3: Customer experience */}
       <div className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
         <div className="flex h-64 flex-col items-center justify-center bg-gradient-to-br from-[#171717] to-[#403c32] text-center text-white transition duration-300 group-hover:brightness-110">
-          <MapPin size={42} className="text-[#f0bc00]" />
-          <p className="mt-4 font-bold">Customer experience photo</p>
+        
         
         </div>
         <div className="p-5">
@@ -560,6 +557,7 @@ export default async function HomePage() {
           <p className="mt-2 text-sm text-gray-500">
             We are ready to help you take the next step.
           </p>
+
         </div>
       </div>
 
