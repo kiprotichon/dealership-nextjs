@@ -3,8 +3,21 @@ import { prisma } from '@/lib/prisma';
 import { verifyAdminToken } from '@/lib/auth';
 
 const ALLOWED_FIELDS = [
-  'make', 'model', 'year', 'price', 'mileage', 'transmission', 'fuelType',
-  'bodyType', 'engine', 'condition', 'description', 'status', 'featured'
+  'make',
+  'model',
+  'year',
+  'price',
+  'mileage',
+  'transmission',
+  'drivetrain',
+  'seats',
+  'fuelType',
+  'bodyType',
+  'engine',
+  'condition',
+  'description',
+  'status',
+  'featured'
 ];
 
 // PUT /api/vehicles/id/[id]  (admin only - partial update)

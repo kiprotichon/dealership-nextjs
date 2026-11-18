@@ -202,7 +202,7 @@ export default async function HomePage() {
       <section className="relative flex min-h-[620px] items-center overflow-hidden bg-[#0b0b0b] md:min-h-[700px]">
 
      <Image
-          src="/logos/hero.jpeg"
+          src="/hero.jpeg"
           alt="Vehicle available at Daily Bazaar"
           fill
           priority
@@ -224,7 +224,7 @@ export default async function HomePage() {
             </div>
 
             <h1 className="text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
-              Smart Deals Every Day.
+              Smart Deals Every Day
               <span className="block text-[#f0bc00]">
                BUY. SELL. DRIVE.
               </span>

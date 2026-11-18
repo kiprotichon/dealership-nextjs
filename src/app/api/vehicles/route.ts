@@ -45,8 +45,8 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const {
-      make, model, year, price, mileage, transmission, fuelType,
-      bodyType, engine, condition, description, featured, features, imageUrls
+  make, model, year, price, mileage, transmission, drivetrain, seats, fuelType,
+  bodyType, engine, condition, description, featured, features, imageUrls
     } = body;
 
     const slug = makeSlug(year, make, model);
@@ -55,7 +55,14 @@ export async function POST(req: NextRequest) {
       data: {
         make, model, year: Number(year), price: Number(price),
         mileage: mileage ? Number(mileage) : null,
-        transmission, fuelType, bodyType, engine, condition, description,
+        transmission,
+        drivetrain: drivetrain || null,
+        seats: seats ? Number(seats) : null,
+        fuelType,
+        bodyType,
+        engine,
+        condition,
+        description,
         featured: !!featured,
         slug,
         images: imageUrls?.length

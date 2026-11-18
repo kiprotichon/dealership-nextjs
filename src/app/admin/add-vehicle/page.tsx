@@ -96,6 +96,8 @@ export default function AddVehiclePage() {
         price: fd.get('price'),
         mileage: fd.get('mileage'),
         transmission: fd.get('transmission'),
+        drivetrain: fd.get('drivetrain'),
+        seats: fd.get('seats') ? Number(fd.get('seats')) : null,
         fuelType: fd.get('fuel_type'),
         bodyType: fd.get('body_type'),
         engine: fd.get('engine'),
@@ -193,6 +195,27 @@ export default function AddVehiclePage() {
               {TRANSMISSIONS.map(t => <option key={t}>{t}</option>)}
             </select>
           </Field>
+          <Field label="Drivetrain">
+          <select name="drivetrain" className="input" defaultValue="">
+             <option value="">Select drivetrain</option>
+             <option value="2WD">2WD</option>
+             <option value="4WD">4WD</option>
+             <option value="AWD">AWD</option>
+          </select>
+          </Field>
+
+          <Field label="Seating Capacity">
+                <select name="seats" className="input" defaultValue="">
+               <option value="">Select seats</option>
+              <option value="2">2 Seats</option>
+               <option value="4">4 Seats</option>
+               <option value="5">5 Seats</option>
+               <option value="7">7 Seats</option>
+               <option value="8">8 Seats</option>
+               <option value="9">9 Seats</option>
+               <option value="11">11+ Seats</option>
+          </select>
+       </Field>
           <Field label="Fuel Type">
             <select name="fuel_type" className="input">
               {FUEL_TYPES.map(t => <option key={t}>{t}</option>)}
