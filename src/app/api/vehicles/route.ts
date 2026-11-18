@@ -44,26 +44,40 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const {
-  make, model, year, price, mileage, transmission, drivetrain, seats, fuelType,
-  bodyType, engine, condition, description, featured, features, imageUrls
-    } = body;
+const {
+  make,
+  model,
+  year,
+  price,
+  mileage,
+  transmission,
+  drivetrain,
+  seats,
+  fuelType,
+  bodyType,
+  engine,
+  condition,
+  description,
+  featured,
+  features,
+  imageUrls
+} = body;
 
     const slug = makeSlug(year, make, model);
 
     const vehicle = await prisma.vehicle.create({
       data: {
         make, model, year: Number(year), price: Number(price),
-        mileage: mileage ? Number(mileage) : null,
-        transmission,
-        drivetrain: drivetrain || null,
-        seats: seats ? Number(seats) : null,
-        fuelType,
-        bodyType,
-        engine,
-        condition,
-        description,
-        featured: !!featured,
+mileage: mileage ? Number(mileage) : null,
+transmission,
+drivetrain: drivetrain || null,
+seats: seats ? Number(seats) : null,
+fuelType,
+bodyType,
+engine,
+condition,
+description,
+featured: !!featured,
         slug,
         images: imageUrls?.length
           ? { create: imageUrls.map((url: string, i: number) => ({ imageUrl: url, isPrimary: i === 0 })) }

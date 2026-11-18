@@ -34,7 +34,7 @@ export default function AdminLoginPage() {
     <div className="min-h-screen bg-primary flex items-center justify-center">
       <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-sm">
         <div className="flex justify-center mb-6">
-          <Image src="/logo-black.png" alt="Daily Bazaar" width={150} height={58} className="h-12 w-auto object-contain" />
+          <Image src="/logos/logo-black.png" alt="Daily Bazaar" width={150} height={58} className="h-12 w-auto object-contain" />
         </div>
         <h2 className="text-xl font-bold mb-6 text-center">Admin Login</h2>
         <form onSubmit={handleSubmit}>

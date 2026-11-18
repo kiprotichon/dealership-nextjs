@@ -88,17 +88,16 @@ export default function AddVehiclePage() {
 
       const features = ((fd.get('features') as string) || '').split(',').map(f => f.trim()).filter(Boolean);
       const finalModel = customModel ? (fd.get('model_custom') as string) : model;
-
-      const payload = {
-        make: make === 'Other' ? (fd.get('make_custom') as string) : make,
-        model: finalModel,
-        year: fd.get('year'),
-        price: fd.get('price'),
-        mileage: fd.get('mileage'),
-        transmission: fd.get('transmission'),
-        drivetrain: fd.get('drivetrain'),
-        seats: fd.get('seats') ? Number(fd.get('seats')) : null,
-        fuelType: fd.get('fuel_type'),
+const payload = {
+  make: make === 'Other' ? (fd.get('make_custom') as string) : make,
+  model: finalModel,
+  year: fd.get('year'),
+  price: fd.get('price'),
+  mileage: fd.get('mileage'),
+  transmission: fd.get('transmission'),
+  drivetrain: fd.get('drivetrain'),
+  seats: fd.get('seats') ? Number(fd.get('seats')) : null,
+  fuelType: fd.get('fuel_type'),
         bodyType: fd.get('body_type'),
         engine: fd.get('engine'),
         condition: fd.get('condition'),

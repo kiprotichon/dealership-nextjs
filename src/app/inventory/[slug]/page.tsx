@@ -1,4 +1,3 @@
-
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
@@ -174,11 +173,20 @@ export default async function VehicleDetailPage({
         ? `${vehicle.mileage.toLocaleString()} km`
         : '—',
     },
-    { icon: Car, label: 'Engine', value: vehicle.engine || '—' },
+    {
+      icon: Car,
+      label: 'Engine',
+      value: vehicle.engine || '—',
+    },
     {
       icon: Settings,
       label: 'Transmission',
       value: vehicle.transmission || '—',
+    },
+    {
+      icon: Car,
+      label: 'Drivetrain',
+      value: vehicle.drivetrain || '—',
     },
     {
       icon: Fuel,
@@ -189,6 +197,15 @@ export default async function VehicleDetailPage({
       icon: Car,
       label: 'Body Type',
       value: vehicle.bodyType || '—',
+    },
+    {
+      icon: Car,
+      label: 'Seating Capacity',
+      value: vehicle.seats
+        ? vehicle.seats === 11
+          ? '11+ Seats'
+          : `${vehicle.seats} Seats`
+        : '—',
     },
     {
       icon: Shield,
@@ -315,6 +332,24 @@ export default async function VehicleDetailPage({
                   <Settings className="h-4 w-4 shrink-0 text-[#b58b00]" />
                   <span className="truncate">
                     {vehicle.transmission || '—'}
+                  </span>
+                </div>
+
+                <div className="flex min-w-0 items-center gap-2 text-gray-600">
+                  <Car className="h-4 w-4 shrink-0 text-[#b58b00]" />
+                  <span className="truncate">
+                    {vehicle.drivetrain || '—'}
+                  </span>
+                </div>
+
+                <div className="flex min-w-0 items-center gap-2 text-gray-600">
+                  <Car className="h-4 w-4 shrink-0 text-[#b58b00]" />
+                  <span className="truncate">
+                    {vehicle.seats
+                      ? vehicle.seats === 11
+                        ? '11+ Seats'
+                        : `${vehicle.seats} Seats`
+                      : '—'}
                   </span>
                 </div>
 
