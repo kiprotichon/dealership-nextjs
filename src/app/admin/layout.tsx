@@ -123,7 +123,7 @@ export default function AdminLayout({
 
         <div className="flex h-24 items-center border-b border-white/10 px-7">
           <Image
-            src="/logo_transparent_yellow.png"
+            src="/logos/logo_transparent_yellow.png"
             alt="Daily Bazaar"
             width={155}
             height={60}
@@ -193,7 +193,7 @@ export default function AdminLayout({
       <header className="sticky top-0 z-30 flex h-[68px] items-center justify-between border-b border-black/20 bg-[#0b0b0b] px-4 shadow-sm lg:hidden">
 
         <Image
-          src="/logo_transparent_yellow.png"
+          src="/logos/logo_transparent_yellow.png"
           alt="Daily Bazaar"
           width={200}
           height={60}
@@ -225,7 +225,7 @@ export default function AdminLayout({
             <div className="flex h-20 items-center justify-between border-b border-white/10 px-5">
 
               <Image
-                src="/logo_transparent_yellow.png"
+                src="/logos/logo_transparent_yellow.png"
                 alt="Daily Bazaar"
                 width={200}
                 height={60}

@@ -38,7 +38,7 @@ export default function Navbar() {
           aria-label="Daily Bazaar home"
         >
           <Image
-            src="/logo_transparent_yellow.png"
+            src="/logos/logo_transparent_yellow.png"
             alt="Daily Bazaar"
             width={160}
             height={60}
